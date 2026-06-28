@@ -4,8 +4,24 @@ import TodoForm from "./TodoForm";
 
 export default function App() {
 
-  // 静的な配列をuseStateで管理するように変更
-  const [todos, setTodos] = useState([]); // 初期値を空の配列に変更
+  // 初期データを用意
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      text: "Reactの基礎を学ぶ",
+      completed: false
+    },
+    {
+      id: 2,
+      text: "Todoアプリを作成する",
+      completed: false
+    },
+    {
+      id: 3,
+      text: "JavaScriptの復習をする",
+      completed: true
+    }
+  ]);
 
   // 新しいIDを生成する関数
   const generateNewId = () => {
@@ -25,6 +41,11 @@ export default function App() {
     setTodos([...todos, newTodo]);
   };
 
+  // Todo削除関数を追加
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter(todo => todo.id !== id);
+    setTodos(updatedTodos);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -37,7 +58,7 @@ export default function App() {
         <TodoForm onAddTodo={addTodo} />
 
         {/* Todo一覧を表示 */}
-        <TodoList todos={todos} />
+        <TodoList todos={todos} onDeleteTodo={deleteTodo} />
 
       </div>
     </div>
