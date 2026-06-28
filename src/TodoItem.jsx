@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
+export default function TodoItem({ todo, onDeleteTodo, onUpdateTodo, onToggleTodo }) {
 
     // 編集モードの状態を管理
     const [isEditing, setIsEditing] = useState(false);
@@ -49,14 +49,26 @@ export default function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         }
     };
 
+    // チェックボックスの変更処理
+    const handleToggle = () => {
+        onToggleTodo(todo.id);
+    };
+
 
 
     return (
-        <div className={`p-3 rounded shadow flex justify-between items-center ${
+        <div className={`p-3 rounded shadow flex items-center gap-3 ${
             todo.completed
                 ? 'bg-green-50 border border-green-200'
                 : 'bg-white'
             }`}>
+                {/* チェックボックスを追加 */}
+                <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={handleToggle}
+                    className="w-5 h-5"
+                />
             <div className="flex-1">
                 {isEditing ? (
                     // 編集モード：入力フォームとボタンを表示
